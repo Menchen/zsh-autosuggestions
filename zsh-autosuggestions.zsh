@@ -3,7 +3,7 @@
 # v0.7.0
 # Copyright (c) 2013 Thiago de Arruda
 # Copyright (c) 2016-2021 Eric Freese
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
 # files (the "Software"), to deal in the Software without
@@ -12,10 +12,10 @@
 # copies of the Software, and to permit persons to whom the
 # Software is furnished to do so, subject to the following
 # conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 # OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -768,7 +768,7 @@ _zsh_autosuggest_async_request() {
 	# If we've got a pending request, cancel it
 	if [[ -n "$_ZSH_AUTOSUGGEST_ASYNC_FD" ]] && { true <&$_ZSH_AUTOSUGGEST_ASYNC_FD } 2>/dev/null; then
 		# Close the file descriptor and remove the handler
-		exec {_ZSH_AUTOSUGGEST_ASYNC_FD}<&-
+		builtin exec {_ZSH_AUTOSUGGEST_ASYNC_FD}<&-
 		zle -F $_ZSH_AUTOSUGGEST_ASYNC_FD
 
 		# We won't know the pid unless the user has zsh/system module installed
@@ -778,7 +778,7 @@ _zsh_autosuggest_async_request() {
 	fi
 
 	# Fork a process to fetch a suggestion and open a pipe to read from it
-	exec {_ZSH_AUTOSUGGEST_ASYNC_FD}< <(
+	builtin exec {_ZSH_AUTOSUGGEST_ASYNC_FD}< <(
 		# Tell parent process our pid if we can
 		echo ${sysparams[pid]:-}
 
@@ -824,7 +824,7 @@ _zsh_autosuggest_async_response() {
 		zle autosuggest-suggest -- "$suggestion"
 
 		# Close the fd
-		exec {1}<&-
+		builtin exec {1}<&-
 		_ZSH_AUTOSUGGEST_ASYNC_FD=
 		_ZSH_AUTOSUGGEST_ASYNC_PID=
 	fi
