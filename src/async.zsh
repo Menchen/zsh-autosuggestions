@@ -73,5 +73,6 @@ _zsh_autosuggest_async_response() {
 	fi
 
 	# Always remove the handler
-	zle -F $1
+	zle -F "$1"
+	_ZSH_AUTOSUGGEST_ASYNC_FD=
 }
